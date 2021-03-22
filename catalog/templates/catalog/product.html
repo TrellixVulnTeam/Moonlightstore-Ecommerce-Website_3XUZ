@@ -1,5 +1,5 @@
-{% extends 'catalog/base.html' %} {% load static %} {% load cart_template_tags %}
- {% block content %}
+{% extends 'catalog/base.html' %} {% load static %} {% load cart_template_tags
+%} {% block content %}
 <!-- Product Detail Start -->
 <div class="product-detail">
   <div class="container-fluid">
@@ -9,68 +9,14 @@
           <div class="row align-items-center">
             <div class="col-md-5">
               <div class="product-slider-single normal-slider">
-                <img
-                  src="{% static 'img/product-1.jpg'%}"
-                  alt="Product Image"
-                />
-                <img
-                  src="{% static 'img/product-3.jpg'%}"
-                  alt="Product Image"
-                />
-                <img
-                  src="{% static 'img/product-5.jpg'%}"
-                  alt="Product Image"
-                />
-                <img
-                  src="{% static 'img/product-7.jpg'%}"
-                  alt="Product Image"
-                />
-                <img
-                  src="{% static 'img/product-9.jpg'%}"
-                  alt="Product Image"
-                />
-                <img
-                  src="{% static 'img/product-10.jpg'%}"
-                  alt="Product Image"
-                />
+                <img src="{{object.image.url}}" alt="Product Image" />
               </div>
               <div class="product-slider-single-nav normal-slider">
+                {% for i in prod %}
                 <div class="slider-nav-img">
-                  <img
-                    src="{% static 'img/product-1.jpg'%}"
-                    alt="Product Image"
-                  />
+                  <img src="{{i.images.url}}" alt="Product Image" />
                 </div>
-                <div class="slider-nav-img">
-                  <img
-                    src="{% static 'img/product-3.jpg'%}"
-                    alt="Product Image"
-                  />
-                </div>
-                <div class="slider-nav-img">
-                  <img
-                    src="{% static 'img/product-5.jpg'%}"
-                    alt="Product Image"
-                  />
-                </div>
-                <div class="slider-nav-img">
-                  <img
-                    src="{% static 'img/product-7.jpg'%}"
-                    alt="Product Image"
-                  />
-                </div>
-                <div class="slider-nav-img">
-                  <img
-                    src="{% static 'img/product-9.jpg'%}"
-                    alt="Product Image"
-                  />
-                </div>
-                <div class="slider-nav-img">
-                  <img
-                    src="{% static 'img/product-10.jpg'%}"
-                    alt="Product Image"
-                  />
-                </div>
+                {% endfor %}
               </div>
             </div>
             <div class="col-md-7">
