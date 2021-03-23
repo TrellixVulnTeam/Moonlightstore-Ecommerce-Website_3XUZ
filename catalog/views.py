@@ -21,6 +21,7 @@ from django.utils.decorators import method_decorator
 
 	
 def home(request):
+	brand = Brand.objects.all()
 	slides = slider.objects.all().order_by('id')[:7]
 	items_list = Item.objects.all()
 	page = request.GET.get('page', 1)
@@ -32,7 +33,7 @@ def home(request):
 	except EmptyPage:
 		items = paginator.page(paginator.num_pages)
 
-	context = {'slides':slides,'items':items,}
+	context = {'slides':slides,'items':items,'brand':brand}
 	return render(request,'catalog/home.html',context)
 
 def product_list(request):

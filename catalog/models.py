@@ -62,6 +62,14 @@ class Item(models.Model):
 			count = 0
 		return count
 
+class Brand(models.Model):
+	image = models.ImageField(upload_to='static/images/brand')
+	company = models.CharField(max_length=200)
+	def __str__(self):
+		return self.company
+	
+
+
 class Review(models.Model):
     """Users can leave product reviews"""
     item = models.ForeignKey(

@@ -39,5 +39,6 @@ admin.site.register(slider)
 admin.site.register(about)
 admin.site.register(about1)
 admin.site.register(addition_info)
+admin.site.register(Brand)
 
 
