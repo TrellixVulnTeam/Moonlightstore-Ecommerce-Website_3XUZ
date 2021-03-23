@@ -192,7 +192,7 @@ def remove_from_cart(request,slug):
 		return redirect('product',slug=slug)
 
 
-def signup(request):
+def register(request):
 	if request.method == 'POST':
 		username = request.POST.get('username')
 		email = request.POST.get('email')
@@ -206,17 +206,35 @@ def signup(request):
 				return redirect('signup')
 			elif User.objects.filter(email=email).exists():
 				messages.info(request, 'Email already exists')
-				return redirect('signup')
+				return redirect('login')
 			else:
 				user = User.objects.create_user(username=username, email=email, password=password1)
 				user.save()
 				messages.success(request, 'Congrats for signing up!')
-				return redirect('signup')
+				return redirect('login')
 		else:
 			messages.info(request, 'password does not match')
-			return redirect('signup')
+			return redirect('login')
 	else:
 		return render(request,'registration/login.html',{'title':'signup'})
+
+def logins(request):
+	if request.method == "POST":
+		form = AuthenticationForm(request, data=request.POST)
+		if form.is_valid():
+			username = form.cleaned_data.get('username')
+			password = form.cleaned_data.get('password')
+			user = authenticate(username=username, password=password)
+			if user is not None:
+				login(request,user)
+				messages.info(request, f"You are now logged in as {username}.")
+				return redirect("home")
+			else:
+				messages.error(request,"Invalid username or password.")
+		else:
+			messages.error(request,"Invalid username or password.")
+	form = AuthenticationForm()
+	return render(request=request, template_name="registration/login.html", context={"login_form":form})
 
 
 

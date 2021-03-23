@@ -185,7 +185,9 @@
                     <h2>Grand Total<span>${{order.get_final_total}}</span></h2>
                   </div>
                   <div class="cart-btn">
-                    <button>Update Cart</button>
+                    <a href="{% url 'product_list' %}">
+                      <button>Continue Shopping</button></a
+                    >
                     <a href="{% url 'delivery' %}">
                       <button>Order Now</button></a
                     >
