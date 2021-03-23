@@ -44,13 +44,19 @@
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'search_results' %}?q=Beads"
-                ><i class="fa fa-child"></i>Beads</a
+              <a class="nav-link" href="{% url 'search_results' %}?q=Vegetables"
+                ><i class="fa fa-child"></i>Vegetables</a
+              >
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'search_results' %}?q=Fruits"
+                ><i class="fa fa-child"></i>Fruits</a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'search_results' %}?q=Beads"
-                ><i class="fa fa-child"></i>Beads</a
+              <a class="nav-link" href="{% url 'search_results' %}?q=Eggs"
+                ><i class="fa fa-child"></i>Eggs</a
               >
             </li>
             <li class="nav-item">
@@ -74,6 +80,13 @@
                 href="{% url 'search_results' %}?q=Electronics"
                 ><i class="fa fa-microchip"></i>Gadgets,Electronics &
                 Accessories</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="{% url 'search_results' %}?q=Electronics"
+                >Electronics</a
               >
             </li>
           </ul>
@@ -141,23 +154,7 @@
       <div class="brand-item">
         <img src="{{brand.image.url}}" alt="" />
       </div>
-      {% endfor %} {% comment %}
-      <div class="brand-item">
-        <img src="{% static 'img/brand-2.png'%}" alt="" />
-      </div>
-      <div class="brand-item">
-        <img src="{% static 'img/brand-3.png'%}" alt="" />
-      </div>
-      <div class="brand-item">
-        <img src="{% static 'img/brand-4.png'%}" alt="" />
-      </div>
-      <div class="brand-item">
-        <img src="{% static 'img/brand-5.png'%}" alt="" />
-      </div>
-      <div class="brand-item">
-        <img src="{% static 'img/brand-6.png'%}" alt="" />
-      </div>
-      {% endcomment %}
+      {% endfor %}
     </div>
   </div>
 </div>

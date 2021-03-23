@@ -1,4 +1,5 @@
-{% extends 'catalog/base.html' %} {% load static %} {% load cart_template_tags %} {% block content %}
+{% extends 'catalog/base.html' %} {% load static %} {% load cart_template_tags
+%} {% block content %}
 <!-- Contact Start -->
 <div class="contact">
   <div class="container-fluid">
@@ -99,4 +100,17 @@
   </div>
 </div>
 <!-- Contact End -->
+<!-- Brand Start -->
+<div class="brand">
+  <div class="container-fluid">
+    <div class="brand-slider">
+      {% for brand in brand %}
+      <div class="brand-item">
+        <img src="{{brand.image.url}}" alt="" />
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<!-- Brand End -->
 {% endblock content %}
