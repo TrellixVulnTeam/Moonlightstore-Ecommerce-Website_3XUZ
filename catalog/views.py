@@ -9,6 +9,8 @@ from django.views.generic import  ListView,View,CreateView#,DetailView,TemplateV
 from .models import *
 from django.db.models import Q
 from .forms import *
+from ecommerce.settings import EMAIL_HOST_USER
+from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
@@ -37,6 +39,7 @@ def home(request):
 	return render(request,'catalog/home.html',context)
 
 def product_list(request):
+	brand = Brand.objects.all()
 	slides = slider.objects.all().order_by('id')[:7]
 	items_list = Item.objects.all().order_by('-price')
 	page = request.GET.get('page', 1)
@@ -48,10 +51,11 @@ def product_list(request):
 	except EmptyPage:
 		items = paginator.page(paginator.num_pages)
 
-	context = {'slides':slides,'items':items,}
+	context = {'slides':slides,'items':items,'brand':brand}
 	return render(request,'catalog/product-list.html',context)
 
 def abouts(request):
+	brand = Brand.objects.all()
 	objects = about.objects.all()
 	abt = about1.objects.all()
 
@@ -63,28 +67,31 @@ def abouts(request):
 
 
 class SearchResultsView(ListView):
-    model = Item
-    template_name = 'catalog/search_results.html'
-
-    def get_queryset(self):
-        query = self.request.GET.get('q')
-        object_list = Item.objects.filter(
+	brand = Brand.objects.all()
+	model = Item
+	template_name = 'catalog/search_results.html'
+	
+	def get_queryset(self):
+		query = self.request.GET.get('q')
+		object_list = Item.objects.filter(
             Q(title__icontains=query) | Q(category__icontains=query)|Q
             (description__icontains=query)
         )
-        return object_list
+		return object_list
 
 """class ProductDetail(DetailView):
 	model = Item
 	template_name = 'catalog/product.html'  """
 
-def product(request,slug):
+def product(request, slug):
+	brand = Brand.objects.all()
 	object = get_object_or_404(Item, slug=slug)
 	#item = Item.objects.all()
 	prod = addition_info.objects.filter(slug=slug)
 	context = {
 		'object':object,
-		'prod':prod
+		'prod': prod,
+		'brand':brand
 	}
 	return render(request,'catalog/product.html',context)
 
@@ -98,10 +105,11 @@ def promotion(request):
 
 class OrderSummaryView(View):
 	@method_decorator(login_required)
-	def get(self,*args,**kwargs):
+	def get(self, *args, **kwargs):
+		brand = Brand.objects.all()
 		order = Order.objects.get(user=self.request.user,ordered=False)
 		context = {
-			'order':order
+			'order':order ,'brand':brand
 		}
 		return render(self.request, 'catalog/order_summary.html',context)
 
@@ -122,6 +130,7 @@ def checkout(request):
 	
 @login_required
 def wishlist(request):
+	brand = Brand.objects.all()
 	items = Item.objects.filter(users_wishlist=request.user)
 	return render(request, 'catalog/wishlist.html',{ "wishlist":items})
 
@@ -236,6 +245,16 @@ def logins(request):
 	form = AuthenticationForm()
 	return render(request=request, template_name="registration/login.html", context={"login_form":form})
 
-
+def subscribe(request):
+    sub = forms.Subscribe()
+    if request.method == 'POST':
+        sub = forms.Subscribe(request.POST)
+        subject = 'Welcome to DataFlair'
+        message = 'Hope you are enjoying your Django Tutorials'
+        recepient = str(sub['Email'].value())
+        send_mail(subject, 
+            message, EMAIL_HOST_USER, [recepient], fail_silently = False)
+        return render(request, 'catalog/home.html', {'recepient': recepient})
+    return render(request, 'catalog/home.html', {'form':sub})
 
 		

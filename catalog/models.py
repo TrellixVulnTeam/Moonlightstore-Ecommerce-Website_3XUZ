@@ -14,12 +14,9 @@ CATEGORY_CHOICES = (
 	('Electronics','Electronics'),
 	('Fruits','Fruits'),
 	('Detergents','Detergents'),
-	('Spices','Spices'),
-	('Eggs','Eggs'),
-	('Perfumes','Perfumes'),
-	('Neckless','Neckless'),
-	('Beads','Beads'),
-	('Earings','Earings')
+	('Fashion','Fashion'),
+	('Shoes','Shoes'),
+	('Perfumes','Perfumes')
 )
 
 LABEL_CHOICES = (
@@ -39,6 +36,7 @@ class Item(models.Model):
 	category = models.CharField(choices=CATEGORY_CHOICES,max_length=15)
 	label  = models.CharField(choices=LABEL_CHOICES,max_length=2)
 	description = models.TextField()
+	specification = models.TextField()
 	img = models.ImageField(upload_to='static/images', height_field=None, width_field=None, max_length=100,default='default.jpg')
 	image = ImageSpecField(processors=[ResizeToFill(572,314)], source='img',
             format='PNG', options={'quality': 100})
@@ -198,3 +196,9 @@ class contact(models.Model):
 		return self.name
 
 
+class Subscribe(models.Model):
+	subscribe = models.EmailField(max_length=255, null=False, blank=True)
+
+	def __str__(self):
+		return self.subscribe
+	

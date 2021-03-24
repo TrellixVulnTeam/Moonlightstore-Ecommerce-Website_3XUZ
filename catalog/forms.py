@@ -58,3 +58,8 @@ class ContactForm(forms.ModelForm):
     class Meta:
             model = contact
             fields = [ 'name', 'email', 'subject', 'message' ]
+
+class Subscribe(forms.Form):
+    Email = forms.EmailField()
+    def __str__(self):
+        return self.Email
